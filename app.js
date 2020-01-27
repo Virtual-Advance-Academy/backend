@@ -4,6 +4,25 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// Swagger setup
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const options = {
+  swaggerDefinition: {
+    // Like the one described here: https://swagger.io/specification/#infoObject
+    info: {
+      title: 'Internship/Full-Time Site API',
+      version: '1.0.0',
+      description: 'API for \'How to land an Internship/Full-Time Job\'',
+    },
+  },
+  // List of files to be processes. You can also set globs './routes/*.js'
+  apis: ['./routes/*.js'],
+};
+
+const specs = swaggerJsdoc(options);
+
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -12,6 +31,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Base Routes
 app.use('/users', usersRouter);
