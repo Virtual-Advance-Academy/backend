@@ -23,7 +23,7 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
-var usersRouter = require('./src/routes/users');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
