@@ -18,12 +18,12 @@ const options = {
     },
   },
   // List of files to be processes. You can also set globs './routes/*.js'
-  apis: ['./routes/*.js'],
+  apis: ['./src/routes/*.js'],
 };
 
 const specs = swaggerJsdoc(options);
 
-var usersRouter = require('./routes/users');
+var usersRouter = require('./src/routes/users');
 
 var app = express();
 
