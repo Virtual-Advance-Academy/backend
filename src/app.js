@@ -23,7 +23,9 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
+// Router Imports
 var usersRouter = require('./routes/users');
+var deployTestRouter = require('./routes/deployTest');
 
 var app = express();
 
@@ -35,6 +37,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Base Routes
 app.use('/users', usersRouter);
+app.use('/desployTest', deployTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
