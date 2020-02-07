@@ -37,8 +37,8 @@ var deployTestRouter = require('./routes/deployTest');
 var app = express();
 
 app.use(logger('dev'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.send("error");
+  res.json({ message: err.message });
 });
 
 module.exports = app;
