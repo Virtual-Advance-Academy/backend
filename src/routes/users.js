@@ -3,6 +3,7 @@ var router = express.Router();
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const UserDto = require('../DTOs/newUser')
+const LoginDto = require('../DTOs/login')
 const validator = require('express-joi-validation').createValidator({ passError: true })
 
 /* GET users listing. */
@@ -44,6 +45,18 @@ router.post('/', validator.body(UserDto), async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
+})
+
+/**
+ * @swagger
+ * /users/auth:
+ *    post:
+ *      description: Authenticate a user
+ *      
+ */
+router.post('/auth', validator.body(LoginDto), (req, res) => {
+  let id = req.body.email || req.body.username;
+  
 })
 
 module.exports = router;
