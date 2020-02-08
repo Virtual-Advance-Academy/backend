@@ -37,8 +37,8 @@ router.post('/', validator.body(UserDto), async (req, res) => {
     let user = new User(req.body)
     const newUser = await user.save();
 
-    //Don't expose the user's password when returned
-    newUser.password = ""
+    //Don't expose the user's password hash when returned
+    delete newUser.password
 
     res.status(201).json(newUser)
   } catch (err) {
