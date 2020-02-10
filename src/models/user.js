@@ -32,18 +32,30 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.methods.generateAuthToken = async () => {
+
+/**
+ * This needs to stay as a regular function.
+ * More info: https://stackoverflow.com/questions/36794709/inside-schema-method-scopes-this-is-empty-in-mongoose-4-4-12
+ */
+userSchema.methods.generateAuthToken = function () {
     // Generate an auth token for the user
     const user = this
-    const token = jwt.sign({ _id: user._id, name: user.fullName }, process.env.JWT_TOKEN)
+
+    const payload = {
+        _id: user._id,
+        name: user.fullName,
+        scope: ['self']
+    }
+
+    const token = jwt.sign(payload, process.env.JWT_TOKEN)
     return token
 }
 
 userSchema.statics.verifyUser = async (emailOrUsername, password) => {
     emailOrUsername = emailOrUsername.toLowerCase()
     // Search for a user by email and password.
-    let user = await User.findOne({ 
-        $or: [{email: emailOrUsername}, { username_lower: emailOrUsername }] 
+    let user = await User.findOne({
+        $or: [{ email: emailOrUsername }, { username_lower: emailOrUsername }]
     })
     if (!user) {
         throw new Error('Invalid login credentials')
