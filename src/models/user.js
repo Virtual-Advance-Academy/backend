@@ -32,7 +32,7 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async () => {
     // Generate an auth token for the user
     const user = this
     const token = jwt.sign({ _id: user._id, name: user.fullName }, process.env.JWT_TOKEN)
@@ -46,13 +46,15 @@ userSchema.statics.verifyUser = async (emailOrUsername, password) => {
         $or: [{email: emailOrUsername}, { username_lower: emailOrUsername }] 
     })
     if (!user) {
-        throw new Error({ error: 'Invalid login credentials' })
+        throw new Error('Invalid login credentials')
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (!isPasswordMatch) {
-        throw new Error({ error: 'Invalid login credentials' })
+        throw new Error('Invalid login credentials')
     }
     return user
 }
 
-module.exports = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

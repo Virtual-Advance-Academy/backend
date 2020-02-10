@@ -51,12 +51,19 @@ router.post('/', validator.body(UserDto), async (req, res) => {
  * @swagger
  * /users/auth:
  *    post:
- *      description: Authenticate a user
+ *      description: Authenticates a user by returning a JWT
  *      
  */
-router.post('/auth', validator.body(LoginDto), (req, res) => {
-  let id = req.body.email || req.body.username;
-  
+router.post('/auth', validator.body(LoginDto), async (req, res) => {
+  const { username, password } = req.body
+
+  try {
+    const user = await User.verifyUser(username, password);
+    const token = await user.generateAuthToken();
+    res.json({ token })
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
 })
 
 module.exports = router;
