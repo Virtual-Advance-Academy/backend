@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const uniqueValidator = require('mongoose-unique-validator')
+
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -66,6 +68,8 @@ userSchema.statics.verifyUser = async (emailOrUsername, password) => {
     }
     return user
 }
+
+userSchema.plugin(uniqueValidator, { message: 'Error, {VALUE} already exists.' });
 
 const User = mongoose.model('User', userSchema)
 
