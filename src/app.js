@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet')
+var cors = require('cors')
 
 // Swagger setup
 const swaggerUi = require('swagger-ui-express');
@@ -38,6 +39,7 @@ var deployTestRouter = require('./routes/deployTest');
 var app = express();
 
 app.use(helmet())
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
