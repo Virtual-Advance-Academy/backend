@@ -22,6 +22,19 @@ router.get("/", (req, res, next) => {
     res.json("Test");
 });
 
+router.get(
+  "/profile",
+  jwt({ secret: process.env.JWT_TOKEN }),
+  async (req, res, next) => {
+    let user = await User.findById(req.user._id, 'fullName username email');
+
+    if(!user)
+      res.status(400).json({ message: "Invalid User ID" })
+
+    res.json(user);
+  }
+);
+
 /**
  * @swagger
  * /users:
