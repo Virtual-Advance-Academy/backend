@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const UserDto = require("../DTOs/newUser");
 const LoginDto = require("../DTOs/login");
+const SurveyDto = require("../DTOs/survey");
 const validator = require("express-joi-validation").createValidator({
     passError: true
 });
@@ -23,16 +24,15 @@ router.get("/", (req, res, next) => {
 });
 
 router.get(
-  "/profile",
-  jwt({ secret: process.env.JWT_TOKEN }),
-  async (req, res, next) => {
-    let user = await User.findById(req.user._id, 'fullName username email');
+    "/profile",
+    jwt({ secret: process.env.JWT_TOKEN }),
+    async (req, res, next) => {
+        let user = await User.findById(req.user._id, "fullName username email");
 
-    if(!user)
-      res.status(400).json({ message: "Invalid User ID" })
+        if (!user) res.status(400).json({ message: "Invalid User ID" });
 
-    res.json(user);
-  }
+        res.json(user);
+    }
 );
 
 /**
@@ -83,5 +83,30 @@ router.post("/auth", validator.body(LoginDto), async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
+
+/**
+ * @swagger
+ * /users/survey:
+ *    post:
+ *      description: Updates the survey data for an authenticated user and
+ *
+ */
+router.post(
+    "/survey",
+    validator.body(SurveyDto),
+    jwt({ secret: process.env.JWT_TOKEN }),
+    async (req, res) => {
+        try {
+            let user = await User.findByIdAndUpdate(req.user._id, {
+                survey: req.body,
+                completedSurvey: true
+            });
+            const token = await user.generateAuthToken();
+            res.json({ token });
+        } catch (err) {
+            res.status(400).json({ message: err.message });
+        }
+    }
+);
 
 module.exports = router;
