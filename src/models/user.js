@@ -31,6 +31,13 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    completedSurvey: {
+        type: Boolean,
+        default: false,
+    },
+    survey: {
+        type: Object
     }
 })
 
@@ -46,6 +53,7 @@ userSchema.methods.generateAuthToken = function () {
     const payload = {
         _id: user._id,
         name: user.fullName,
+        completedSurvey: user.completedSurvey,
         scope: ['self']
     }
 
