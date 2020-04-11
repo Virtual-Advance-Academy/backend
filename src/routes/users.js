@@ -96,11 +96,14 @@ router.post(
     validator.body(SurveyDto),
     jwt({ secret: process.env.JWT_TOKEN }),
     async (req, res) => {
+        //Generate completion object
+
         try {
             let user = await User.findByIdAndUpdate(req.user._id, {
                 survey: req.body,
                 completedSurvey: true
             });
+            user = await User.findById(req.user._id);
             const token = await user.generateAuthToken();
             res.json({ token });
         } catch (err) {
