@@ -1,141 +1,62 @@
 const Joi = require("@hapi/joi");
+const responses = require("../Utils/validResponses")
 
 const schema = Joi.object({
     "question-0": Joi.string()
         .valid(
-            "1st Year",
-            "2nd Year",
-            "3rd Year",
-            "4th Year",
-            "Past 4th Year",
-            "Masters",
-            "PhD",
-            "N/A"
+            ...responses.question0
         )
         .required(),
     "question-1": Joi.string()
         .valid(
-            "Computer Science",
-            "Computer Engineering",
-            "Information Technology",
-            "Management Information Systems",
-            "Mechanical Engineering",
-            "Electrical Engineering",
-            "Physics",
-            "IoT",
-            "Mathematics",
-            "Other"
+            ...responses.question1
         )
         .required(),
     "question-2": Joi.array()
         .items(
             Joi.string().valid(
-                "Software Programming",
-                "Program Management",
-                "Cyber Security",
-                "Artificial Intelligence",
-                "Hardware Programming",
-                "Robotics",
-                "Database Development",
-                "Advanced User Support",
-                "Networking",
-                "UI/UX",
-                "Other"
+                ...responses.question2
             )
         )
         .required(),
     "question-3": Joi.string()
         .valid(
-            "Internship",
-            "Full-Time Position",
-            "Part-Time Position",
-            "Research"
+            ...responses.question3
         )
         .required(),
     "question-4": Joi.array()
         .items(
             Joi.string().valid(
-                "Google",
-                "Cisco",
-                "Adobe",
-                "Facebook",
-                "Nike",
-                "Uber",
-                "Microsoft",
-                "NASA",
-                "Lyft",
-                "Amazon",
-                "Twitter",
-                "Dell",
-                "Apple",
-                "Salesforce",
-                "Nvidia",
-                "Ultimate Software",
-                "Intel",
-                "LinkedIn",
-                "Citrix",
-                "IBM",
-                "Other"
+                ...responses.question4
             )
         )
         .required(),
     "question-5": Joi.array()
         .items(
             Joi.string().valid(
-                "Industry Internship",
-                "Research Experience",
-                "Personal Projects",
-                "Shadowing Experience",
-                "Full-Time Job Experience",
-                "Internship/Job Offers",
-                "Mentoring student(s)",
-                "Being mentored by other student(s)",
-                "Being part of a computing group, club, etc",
-                "Attending a symposia or other computing events",
-                "Attending social events organized by the department",
-                "Attending a computing conference",
-                "Presenting work to other students (not classwork)",
-                "Networking with industry and other professionals",
-                "Interacting with students in different year(s)",
-                "None"
+                ...responses.question5
             )
         )
         .required(),
     "question-6": Joi.array()
         .items(
             Joi.string().valid(
-                "Peers",
-                "Teaching or Learning Assistants",
-                "Faculty/Instructors",
-                "Online Courses (LinkedIn Learning, LeetCode, Khan Academy, Code.org, etc)",
-                "Reading",
-                "Videos",
-                "Personal Projects",
-                "Hackathons",
-                "Class Assignments",
-                "Class Lectures",
-                "Campus workshops by clubs and organizations on campus",
-                "Other"
+                ...responses.question6
             )
         )
         .required(),
     "question-7": Joi.array()
         .items(
             Joi.string().valid(
-                "GitHub",
-                "LinkedIn",
-                "Personal Website",
-                "LeetCode Account",
-                "HackerRank Account",
-                "None of the above"
+                ...responses.question7
             )
         )
         .required(),
     "question-8": Joi.string()
-        .valid("0", "1-3", "4-6", "7-9", "10+")
+        .valid(...responses.question8)
         .required(),
     "question-9": Joi.string()
-        .valid("0", "1-3", "4-6", "7-9", "10+")
+        .valid(...responses.question9)
         .required(),
     "question-10-0": Joi.number()
         .min(1)
@@ -236,22 +157,15 @@ const schema = Joi.object({
     "question-17": Joi.array()
         .items(
             Joi.string().valid(
-                "American Indian or Alaska Native",
-                "Asian",
-                "Black or African American",
-                "Hispanic, Latinx, or Spanish Origin",
-                "Middle Easter or North African",
-                "Native Hawaiian or Other Pacific Islander",
-                "White",
-                "Another race or ethnicity not listed above"
+                ...responses.question17
             )
         )
         .required(),
     "question-18": Joi.string()
-        .valid("Female", "Male", "Transgender", "A gender not listed")
+        .valid(...responses.question18)
         .required(),
     "question-19": Joi.string()
-        .valid("0", "1-5", "6-10", "11-15", "16-20", "21+")
+        .valid(...responses.question19)
         .required()
 });
 
