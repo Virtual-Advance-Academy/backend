@@ -5,6 +5,34 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const Schema = mongoose.Schema
 
+const moduleCompletionSchema = new Schema({
+    // Percentage (0-100) already completed via survey 
+    initialCompletion: {
+        type: Number,
+        required: true
+    },
+    // Total    Percentage (0-100) completed so far
+    currentCompletion: {
+        type: Number,
+        required: true
+    }
+});
+
+const completionSchema = new Schema({
+    "module-1":  moduleCompletionSchema,
+    "module-2":  moduleCompletionSchema,
+    "module-3":  moduleCompletionSchema,
+    "module-4":  moduleCompletionSchema,
+    "module-5":  moduleCompletionSchema,
+    "module-6":  moduleCompletionSchema,
+    "module-7":  moduleCompletionSchema,
+    "module-8":  moduleCompletionSchema,
+    "module-9":  moduleCompletionSchema,
+    "module-10": moduleCompletionSchema,
+    "module-11": moduleCompletionSchema
+
+});
+
 const userSchema = new Schema({
     fullName: {
         type: String,
@@ -38,9 +66,9 @@ const userSchema = new Schema({
     },
     survey: {
         type: Object
-    }
+    },
+    completion: completionSchema
 })
-
 
 /**
  * This needs to stay as a regular function.
