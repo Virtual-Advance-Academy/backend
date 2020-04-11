@@ -1,5 +1,5 @@
 const Joi = require("@hapi/joi");
-const responses = require("../Utils/validResponses")
+const { responses } = require("../Utils/validResponses")
 
 const schema = Joi.object({
     "question-0": Joi.string()
@@ -134,10 +134,6 @@ const schema = Joi.object({
         .min(1)
         .max(5)
         .required(),
-    "question-14-2": Joi.number()
-        .min(1)
-        .max(5)
-        .required(),
     "question-15-0": Joi.number()
         .min(1)
         .max(5)
@@ -146,25 +142,17 @@ const schema = Joi.object({
         .min(1)
         .max(5)
         .required(),
-    "question-16-0": Joi.number()
-        .min(1)
-        .max(5)
-        .required(),
-    "question-16-1": Joi.number()
-        .min(1)
-        .max(5)
-        .required(),
-    "question-17": Joi.array()
+    "question-16": Joi.array()
         .items(
             Joi.string().valid(
                 ...responses.question17
             )
         )
         .required(),
-    "question-18": Joi.string()
+    "question-17": Joi.string()
         .valid(...responses.question18)
         .required(),
-    "question-19": Joi.string()
+    "question-18": Joi.string()
         .valid(...responses.question19)
         .required()
 });
