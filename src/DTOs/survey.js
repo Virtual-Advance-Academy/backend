@@ -145,15 +145,15 @@ const schema = Joi.object({
     "question-16": Joi.array()
         .items(
             Joi.string().valid(
-                ...responses.question17
+                ...responses.question16
             )
         )
         .required(),
     "question-17": Joi.string()
-        .valid(...responses.question18)
+        .valid(...responses.question17)
         .required(),
     "question-18": Joi.string()
-        .valid(...responses.question19)
+        .valid(...responses.question18)
         .required()
 });
 
