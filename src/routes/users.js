@@ -9,6 +9,7 @@ const SurveyDto = require("../DTOs/survey");
 const validator = require("express-joi-validation").createValidator({
     passError: true
 });
+const makeCompletion = require("../Utils/makeCompletion")
 
 /* GET users listing. */
 /**
@@ -97,11 +98,12 @@ router.post(
     jwt({ secret: process.env.JWT_TOKEN }),
     async (req, res) => {
         //Generate completion object
-
+        let completion = makeCompletion(req.body);
         try {
             let user = await User.findByIdAndUpdate(req.user._id, {
                 survey: req.body,
-                completedSurvey: true
+                completedSurvey: true,
+                completion
             });
             user = await User.findById(req.user._id);
             const token = await user.generateAuthToken();
