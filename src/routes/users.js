@@ -120,8 +120,6 @@ router.get(
     async (req, res) => {
         try {
             let user = await User.findById(req.user._id, {_id: 0, completion: 1,});
-            delete user._id;
-            console.log(user);
             res.json(user);
         } catch (err) {
             res.status(400).json({ message: err.message });
