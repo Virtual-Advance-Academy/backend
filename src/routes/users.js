@@ -7,8 +7,9 @@ const UserDto = require("../DTOs/newUser");
 const LoginDto = require("../DTOs/login");
 const SurveyDto = require("../DTOs/survey");
 const validator = require("express-joi-validation").createValidator({
-    passError: true
+    passError: true,
 });
+const makeCompletion = require("../Utils/makeCompletion");
 
 /* GET users listing. */
 /**
@@ -96,13 +97,30 @@ router.post(
     validator.body(SurveyDto),
     jwt({ secret: process.env.JWT_TOKEN }),
     async (req, res) => {
+        //Generate completion object
+        let completion = makeCompletion(req.body);
         try {
             let user = await User.findByIdAndUpdate(req.user._id, {
                 survey: req.body,
-                completedSurvey: true
+                completedSurvey: true,
+                completion,
             });
+            user = await User.findById(req.user._id);
             const token = await user.generateAuthToken();
             res.json({ token });
+        } catch (err) {
+            res.status(400).json({ message: err.message });
+        }
+    }
+);
+
+router.get(
+    "/completion",
+    jwt({ secret: process.env.JWT_TOKEN }),
+    async (req, res) => {
+        try {
+            let user = await User.findById(req.user._id, {_id: 0, completion: 1,});
+            res.json(user);
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
