@@ -6,6 +6,8 @@
 
 `yarn test` - Run tests with jest
 
+Copy [`example.env`](example.env) as `.env` in the repo root and enter values for the environment variable as needed
+
 ## API Documentation
 
 This service uses [Swagger (Open API)](https://swagger.io/docs/specification/about/) for generating API documentation. To read the docs, start the express server and navigate to `/api-docs` for an interactive documentation page.
