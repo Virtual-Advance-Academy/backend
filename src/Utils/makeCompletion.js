@@ -107,16 +107,34 @@ let makeCompletion = (survey) => {
         }
     }
 
+    
+    //Shared Logic
+    let hasExperience = containsAtLeast(
+        survey["question-5"],
+        responsesByModule.m1.criteriaQ5,
+        2
+    );
+
+    let hasGreatExperience = containsAtLeast(
+        survey["question-5"],
+        responsesByModule.m1.criteriaQ5,
+        4
+    );
+
+    let hasManyOffers =
+        containsAtLeast(
+            [survey["question-9"]],
+            responsesByModule.m1.criteriaQ9,
+            1
+        )
+
     //Module 1
     {
         let score = 0;
-        let hasExperience = containsAtLeast(
-            survey["question-5"],
-            responsesByModule.m1.criteriaQ5,
-            2
-        );
 
-        if (hasExperience) score += 50;
+        if (hasExperience) score += 40;
+        if (hasGreatExperience) score += 30;
+        if (hasManyOffers) score += 30;
 
         completion["module-1"].initialCompletion = score;
         completion["module-1"].currentCompletion = score;
@@ -129,6 +147,11 @@ let makeCompletion = (survey) => {
             responsesByModule.m2.criteriaQ5,
             3
         );
+        let hasNetworkedWell = containsAtLeast(
+            survey["question-5"],
+            responsesByModule.m2.criteriaQ5,
+            5
+        );
 
         let isNetworkConfident = isConfident([
             survey["question-14-0"],
@@ -136,7 +159,8 @@ let makeCompletion = (survey) => {
         ]);
 
         if (hasNetworked) score += 50;
-        if (isNetworkConfident) score += 20;
+        if (hasNetworkedWell) score += 20;
+        if (isNetworkConfident) score += 30;
 
         completion["module-2"].initialCompletion = score;
         completion["module-2"].currentCompletion = score;
@@ -159,6 +183,7 @@ let makeCompletion = (survey) => {
 
         if (hasResume) score += 40;
         if (isResumeConfident) score += 30;
+        if (hasManyOffers) score += 30;
 
         completion["module-2"].initialCompletion = score;
         completion["module-2"].currentCompletion = score;
@@ -167,11 +192,6 @@ let makeCompletion = (survey) => {
     //Module 4
     {
         let score = 0;
-        let hasExperience = containsAtLeast(
-            survey["question-5"],
-            responsesByModule.m1.criteriaQ5,
-            2
-        );
 
         let isAppConfident = isConfident([
             survey["question-12-0"],
@@ -179,7 +199,8 @@ let makeCompletion = (survey) => {
             survey["question-12-2"],
         ]);
 
-        if (hasExperience) score += 50;
+        if (hasExperience) score += 40;
+        if (hasGreatExperience) score += 30;
         if (isAppConfident) score += 30;
 
         completion["module-4"].initialCompletion = score;
@@ -188,19 +209,15 @@ let makeCompletion = (survey) => {
     //Module 5
     {
         let score = 0;
-        let hasExperience = containsAtLeast(
-            survey["question-5"],
-            responsesByModule.m1.criteriaQ5,
-            2
-        );
 
         let canWearConfident = isConfident([
             survey["question-15-0"],
             survey["question-15-1"],
         ]);
 
-        if (hasExperience) score += 50;
-        if (canWearConfident) score += 20;
+        if (hasExperience) score += 40;
+        if (hasGreatExperience) score += 30;
+        if (canWearConfident) score += 30;
 
         completion["module-5"].initialCompletion = score;
         completion["module-5"].currentCompletion = score;
@@ -209,6 +226,11 @@ let makeCompletion = (survey) => {
     {
         let score = 0;
 
+        let isBehaviorExperienced = isConfident(
+            survey["module-6"],
+            responsesByModule.m6.criteriaQ5,
+            3
+        );
         let isBehaviorConfident = isConfident([
             survey["question-11-0"],
             survey["question-11-1"],
@@ -217,7 +239,8 @@ let makeCompletion = (survey) => {
             survey["question-11-4"],
         ]);
 
-        if (isBehaviorConfident) score += 40;
+        if (isBehaviorExperienced) score += 50;
+        if (isBehaviorConfident) score += 50;
 
         completion["module-6"].initialCompletion = score;
         completion["module-6"].currentCompletion = score;
@@ -231,17 +254,13 @@ let makeCompletion = (survey) => {
             3
         );
 
-        let hasManyOffers =
+        let hasManyInterviewsAndOffers =
             containsAtLeast(
                 [survey["question-8"]],
                 responsesByModule.m7.criteriaQ8,
                 1
             ) &&
-            containsAtLeast(
-                [survey["question-9"]],
-                responsesByModule.m7.criteriaQ9,
-                3
-            );
+            hasManyOffers;
 
         let isTechConfident = isConfident([
             survey["question-10-0"],
@@ -259,7 +278,7 @@ let makeCompletion = (survey) => {
         );
 
         if (hasTechProfiles) score += 10;
-        if (hasManyOffers) score += 30;
+        if (hasManyInterviewsAndOffers) score += 30;
         if (isTechConfident) score += 40;
         if (isCodingALot) score += 20;
 
@@ -280,12 +299,6 @@ let makeCompletion = (survey) => {
             survey["question-5"],
             responsesByModule.m11.criteriaQ5,
             2
-        );
-
-        let hasManyOffers = containsAtLeast(
-            [survey["question-9"]],
-            responsesByModule.m11.criteriaQ9,
-            1
         );
 
         if (hasPitched) score += 40;
