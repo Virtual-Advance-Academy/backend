@@ -157,8 +157,15 @@ let responsesByModule = {
     m1: {
         criteriaQ5: [
             responseMap.question5.get(questionKeys.question5[15]),
-            responseMap.question5.get(questionKeys.question5[16])
+            responseMap.question5.get(questionKeys.question5[16]),
+            responseMap.question5.get(questionKeys.question5[4]),
+            responseMap.question5.get(questionKeys.question5[8]),
+            responseMap.question5.get(questionKeys.question5[10]),
         ],
+        criteriaQ9: [
+            responseMap.question9.get(questionKeys.question9[4]),
+            responseMap.question9.get(questionKeys.question9[5]),
+        ]
     },
     m2: {
         criteriaQ5: [
@@ -186,17 +193,28 @@ let responsesByModule = {
     m4: {
         criteriaQ5: [
             responseMap.question5.get(questionKeys.question5[15]),
-            responseMap.question5.get(questionKeys.question5[16])
+            responseMap.question5.get(questionKeys.question5[16]),
+            responseMap.question5.get(questionKeys.question5[4]),
+            responseMap.question5.get(questionKeys.question5[8]),
+            responseMap.question5.get(questionKeys.question5[10]),
         ],
     },
     m5: {
         criteriaQ5: [
             responseMap.question5.get(questionKeys.question5[15]),
-            responseMap.question5.get(questionKeys.question5[16])
+            responseMap.question5.get(questionKeys.question5[16]),
+            responseMap.question5.get(questionKeys.question5[4]),
+            responseMap.question5.get(questionKeys.question5[8]),
+            responseMap.question5.get(questionKeys.question5[10]),
         ],
     },
     m6: {
-        
+        criteriaQ5: [
+            responseMap.question5.get(questionKeys.question5[15]),
+            responseMap.question5.get(questionKeys.question5[16]),
+            responseMap.question5.get(questionKeys.question5[1]),
+            responseMap.question5.get(questionKeys.question5[4])
+        ],
     },
     m7: {
         criteriaQ7: [
