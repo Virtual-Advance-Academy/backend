@@ -10,13 +10,17 @@ const { responsesByModule } = require("./validResponses");
  */
 let containsAtLeast = (target, items, atLeast) => {
     //Note: None of the data we're working with is repeatable, so this is fine
-    items = new Set(items);
+    const itemSet = new Set(items);
 
-    let intersection = new Set(target.filter((x) => items.has(x)));
+    let intersection = new Set(target.filter((x) => itemSet.has(x)));
 
     return intersection.size >= atLeast;
 };
 
+/**
+ * Checks if a users responses are all 5s
+ * @param {Array} questions 
+ */
 let isConfident = (questions) => {
     for (let q of questions) {
         if (q < 5) return false;
@@ -226,8 +230,8 @@ let makeCompletion = (survey) => {
     {
         let score = 0;
 
-        let isBehaviorExperienced = isConfident(
-            survey["module-6"],
+        let isBehaviorExperienced = containsAtLeast(
+            survey["question-5"],
             responsesByModule.m6.criteriaQ5,
             3
         );
