@@ -26,3 +26,5 @@ jobs:
     - run: npm test
       env:
         CI: true
+        SALT_ROUNDS: 1
+        JWT_TOKEN: testing

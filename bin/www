@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
+const env = require('../envConfig')
 
 
 /**
  * Module dependencies.
  */
-var dotenv = require('dotenv').config()
 var app = require('../src/app');
 var debug = require('debug')('backend:server');
 var http = require('http');
