@@ -13,6 +13,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 
 const options = {
   swaggerDefinition: {
+    openapi: '3.0.0',
     // Like the one described here: https://swagger.io/specification/#infoObject
     info: {
       title: 'Internship/Full-Time Site API',
@@ -21,7 +22,7 @@ const options = {
     },
   },
   // List of files to be processes. You can also set globs './routes/*.js'
-  apis: ['./src/routes/*.js'],
+  apis: ['./src/DTOs/*.js', './src/routes/*.js' ],
 };
 
 const specs = swaggerJsdoc(options);
