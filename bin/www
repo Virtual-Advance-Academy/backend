@@ -2,10 +2,15 @@
 
 
 
+
 /**
  * Module dependencies.
  */
-var dotenv = require('dotenv').config()
+var dotenv = require('dotenv');
+const envFile = process.env.NODE_ENV ? `.env.${process.env.NODE_END}` : '.env';
+dotenv.config({path: envFile})
+
+
 var app = require('../src/app');
 var debug = require('debug')('backend:server');
 var http = require('http');
