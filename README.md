@@ -1,4 +1,8 @@
-# How to Land a Job/Internship - API Backend
+# Virtual Advance Academy - API Backend
+
+Feel free to reach out to both Christopher and Carolina if you feel like you need clarification or help with any of the code in this repository.
+- Christopher Rodriguez: (chrisrodrig1 [AT] gmail.com)
+- Caroline Uribe-Gosselin (curibegosselin [AT] gmail.com)
 
 ## Development
 
