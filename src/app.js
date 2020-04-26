@@ -13,6 +13,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 
 const options = {
   swaggerDefinition: {
+    openapi: '3.0.0',
     // Like the one described here: https://swagger.io/specification/#infoObject
     info: {
       title: 'Internship/Full-Time Site API',
@@ -21,13 +22,13 @@ const options = {
     },
   },
   // List of files to be processes. You can also set globs './routes/*.js'
-  apis: ['./src/routes/*.js'],
+  apis: ['./src/DTOs/*.js', './src/routes/*.js' ],
 };
 
 const specs = swaggerJsdoc(options);
 
 //MongoDB Connection
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.set('useCreateIndex', true)
 const db = mongoose.connection
 db.on('error', (error) => console.error(error))
@@ -35,7 +36,6 @@ db.once('open', () => console.log('connected to database'))
 
 // Router Imports
 var usersRouter = require('./routes/users');
-var deployTestRouter = require('./routes/deployTest');
 
 var app = express();
 
@@ -49,7 +49,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Base Routes
 app.use('/users', usersRouter);
-app.use('/desployTest', deployTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

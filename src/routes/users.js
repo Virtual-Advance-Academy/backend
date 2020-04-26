@@ -11,36 +11,36 @@ const validator = require("express-joi-validation").createValidator({
 });
 const makeCompletion = require("../Utils/makeCompletion");
 
-/* GET users listing. */
 /**
  * @swagger
- * /users:
- *    get:
- *      description: This should output 'Test'
- *      responses:
- *        '200':
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
  */
-router.get("/", (req, res, next) => {
-    res.json("Test");
-});
-
-router.get(
-    "/profile",
-    jwt({ secret: process.env.JWT_TOKEN }),
-    async (req, res, next) => {
-        let user = await User.findById(req.user._id, "fullName username email");
-
-        if (!user) res.status(400).json({ message: "Invalid User ID" });
-
-        res.json(user);
-    }
-);
 
 /**
  * @swagger
  * /users:
  *    post:
  *      description: Register a new user
+ *      requestBody:
+ *          description: User registration info
+ *          content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/User'
+ *      responses:
+ *          201:
+ *              description: Returns the User object, without password
+ *              
+ *          400:
+ *              description: Validation failed
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Error'
  *
  */
 router.post("/", validator.body(UserDto), async (req, res) => {
@@ -89,6 +89,8 @@ router.post("/auth", validator.body(LoginDto), async (req, res) => {
  * @swagger
  * /users/survey:
  *    post:
+ *      security:
+ *          - BearerAuth
  *      description: Updates the survey data for an authenticated user and
  *
  */
@@ -114,12 +116,34 @@ router.post(
     }
 );
 
+/* Get user's profile */
+/**
+ * @swagger
+ * /users/profile:
+ *   get:
+ *      description: Retrieves a user's profile information, specifically their Full Name, username, and email
+ */
+router.get(
+    "/profile",
+    jwt({ secret: process.env.JWT_TOKEN }),
+    async (req, res, next) => {
+        let user = await User.findById(req.user._id, "fullName username email");
+
+        if (!user) res.status(400).json({ message: "Invalid User ID" });
+
+        res.json(user);
+    }
+);
+
 router.get(
     "/completion",
     jwt({ secret: process.env.JWT_TOKEN }),
     async (req, res) => {
         try {
-            let user = await User.findById(req.user._id, {_id: 0, completion: 1,});
+            let user = await User.findById(req.user._id, {
+                _id: 0,
+                completion: 1,
+            });
             res.json(user);
         } catch (err) {
             res.status(400).json({ message: err.message });
